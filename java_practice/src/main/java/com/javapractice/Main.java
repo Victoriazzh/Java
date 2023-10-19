@@ -1,7 +1,6 @@
 package com.javapractice;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.text.CollationElementIterator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,9 +9,14 @@ public class Main {
         boolean continueCalculations = true;
         double totalCost=0;
 
+        // ---------Only for task 3---------//
         //static array that grows
-        double[] prices = new double[5];
+        //double[] prices = new double[5];
+
         int entries=0;
+
+        //task 4
+        ArrayList<Double> prices = new ArrayList<>();
 
         while (continueCalculations) {
             double cost;
@@ -25,19 +29,23 @@ public class Main {
                 System.out.print("Enter VAT rate (%): ");
                 vat = sc.nextDouble();
 
+                // ---------Only for task 3---------//
                 //if the index is now the size of the array we must increment it
-                if (entries== prices.length){
+                //if (entries== prices.length){
                     //make prices the original prices with 2 more slots
-                    prices= Arrays.copyOf(prices,prices.length+2);
-                }
+                   // prices= Arrays.copyOf(prices,prices.length+2);
+                //}
 
                 double finalVAT = VAT(vat, cost);
-                prices[entries] = finalVAT + cost;
+                double finalPrice = finalVAT + cost;
 
-                totalCost+=prices[entries];
+                totalCost+=finalPrice;
+
+                prices.add(finalPrice);
 
 
-                System.out.printf("This price is: £%.2f%n", prices[entries]);
+
+                System.out.printf("This price is: £%.2f%n", finalPrice);
                 System.out.printf("the total cost is: £%.2f%n",totalCost);
 
                 System.out.print("Type QUIT to stop or press ENTER to continue: ");
@@ -47,6 +55,7 @@ public class Main {
                     continueCalculations = false;
                 }
 
+                // ---------Only for task 3---------//
                 //increment entries
                 entries++;
 
@@ -54,6 +63,14 @@ public class Main {
                 System.out.println("Incorrect value. Please enter valid numbers.");
                 sc.nextLine(); // Consume the invalid input
             }
+        }
+
+
+        //after quit print sorted array
+        Collections.sort(prices);
+        System.out.println("These are the sorted prices: ");
+        for (double price : prices) {
+            System.out.printf("£%.2f %n", price);
         }
     }
 
