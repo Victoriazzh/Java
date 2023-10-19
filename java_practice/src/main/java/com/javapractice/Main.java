@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        //declare variables
         Scanner sc = new Scanner(System.in);
         Scanner scString= new Scanner(System.in);
         boolean continueCalculations = true;
@@ -12,10 +13,9 @@ public class Main {
         // ---------Only for task 3---------//
         //static array that grows
         //double[] prices = new double[5];
+        //int entries=0;
 
-        int entries=0;
-
-        //task 4
+        //task 4 defining dynamic arrays
         ArrayList<Double> prices = new ArrayList<>();
 
         while (continueCalculations) {
@@ -41,6 +41,7 @@ public class Main {
 
                 totalCost+=finalPrice;
 
+                // add the final price to the prices array at the end
                 prices.add(finalPrice);
 
 
@@ -57,7 +58,7 @@ public class Main {
 
                 // ---------Only for task 3---------//
                 //increment entries
-                entries++;
+                //entries++;
 
             } catch (InputMismatchException e) {
                 System.out.println("Incorrect value. Please enter valid numbers.");
@@ -67,6 +68,8 @@ public class Main {
 
 
         //after quit print sorted array
+
+        //use collections to sort the array prices and then output it
         Collections.sort(prices);
         System.out.println("These are the sorted prices: ");
         for (double price : prices) {
