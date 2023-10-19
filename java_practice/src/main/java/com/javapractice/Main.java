@@ -2,6 +2,72 @@ package com.javapractice;
 import java.text.CollationElementIterator;
 import java.util.*;
 
+
+//interface in Java
+interface Prompt{
+    Object getValue();
+}
+
+class intPrompt implements Prompt{
+    private Scanner sc = new Scanner(System.in);
+
+    public Object getValue(){
+        System.out.print("Enter a Integer: ");
+        return sc.nextInt();
+    }
+}
+
+class doublePrompt implements Prompt{
+    private Scanner sc = new Scanner(System.in);
+    public Object getValue(){
+        System.out.print("Enter a Double: ");
+        return sc.nextDouble();
+    }
+}
+
+class stringPrompt implements Prompt{
+    private Scanner sc = new Scanner(System.in);
+    public Object getValue(){
+        System.out.print("Enter a String: ");
+        return sc.nextLine();
+    }
+}
+
+class userPrompt {
+    //declare variables
+    private Scanner sc = new Scanner(System.in);
+    private Scanner scString= new Scanner(System.in);
+    private double cost, vat;
+    private int quantity;
+    private String input;
+
+    public double getCost(){
+        System.out.print("Enter a cost: ");
+        this.cost = sc.nextDouble();
+        return cost;
+    }
+
+    public double getVat(){
+        System.out.print("Enter VAT rate (%): ");
+        this.vat = sc.nextDouble();
+        return vat;
+    }
+
+    public int getQuantity(){
+        System.out.print("Enter the quantity: ");
+        this.quantity=sc.nextInt();
+        return quantity;
+    }
+
+    public String getQuitStatus(){
+        System.out.print("Type QUIT to stop or press ENTER to continue: ");
+        input = scString.nextLine();
+        return input;
+    }
+}
+
+
+
 //task 5
 class PurchasedItem {
     private double costPrice,vatRate,totalCost,finalPrice;
@@ -45,40 +111,6 @@ class PurchasedItem {
     }
 
 }
-
-class userPrompt {
-    //declare variables
-    private Scanner sc = new Scanner(System.in);
-    private Scanner scString= new Scanner(System.in);
-    private double cost, vat;
-    private int quantity;
-    private String input;
-
-    public double getCost(){
-        System.out.print("Enter a cost: ");
-        this.cost = sc.nextDouble();
-        return cost;
-    }
-
-    public double getVat(){
-        System.out.print("Enter VAT rate (%): ");
-        this.vat = sc.nextDouble();
-        return vat;
-    }
-
-    public int getQuantity(){
-        System.out.print("Enter the quantity: ");
-        this.quantity=sc.nextInt();
-        return quantity;
-    }
-
-    public String getQuitStatus(){
-        System.out.print("Type QUIT to stop or press ENTER to continue: ");
-        input = scString.nextLine();
-        return input;
-    }
-}
-
 public class Main {
     public static void main(String[] args) {
         //declare variables
@@ -88,12 +120,14 @@ public class Main {
         int quantity;
         String input;
 
-        userPrompt inputs = new userPrompt();
+        //userPrompt inputs = new userPrompt();
         PurchasedItem item = new PurchasedItem();
+
 
         while (continueCalculations) {
             try {
-                cost=inputs.getCost();
+                System.out.print("Enter the cost: ");
+                cost = new doublePrompt();
                 vat= inputs.getVat();
                 quantity=inputs.getQuantity();
 
@@ -117,5 +151,4 @@ public class Main {
         item.sortList();
         item.printList();
     }
-    
 }
