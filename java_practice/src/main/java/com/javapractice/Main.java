@@ -21,6 +21,7 @@ public class Main {
         while (continueCalculations) {
             double cost;
             double vat;
+            int quantity;
             String input;
 
             try {
@@ -29,6 +30,10 @@ public class Main {
                 System.out.print("Enter VAT rate (%): ");
                 vat = sc.nextDouble();
 
+                System.out.println("Enter the quantity: ");
+                quantity=sc.nextInt();
+
+
                 // ---------Only for task 3---------//
                 //if the index is now the size of the array we must increment it
                 //if (entries== prices.length){
@@ -36,8 +41,9 @@ public class Main {
                    // prices= Arrays.copyOf(prices,prices.length+2);
                 //}
 
-                double finalVAT = VAT(vat, cost);
-                double finalPrice = finalVAT + cost;
+                PurchasedItem item = new PurchasedItem(cost,vat,quantity);
+
+                double finalPrice = item.getTotalPrice();
 
                 totalCost+=finalPrice;
 
@@ -46,7 +52,7 @@ public class Main {
 
 
 
-                System.out.printf("This price is: £%.2f%n", finalPrice);
+                System.out.printf("This price for all the items are: £%.2f%n", finalPrice);
                 System.out.printf("the total cost is: £%.2f%n",totalCost);
 
                 System.out.print("Type QUIT to stop or press ENTER to continue: ");
@@ -76,8 +82,23 @@ public class Main {
             System.out.printf("£%.2f %n", price);
         }
     }
+}
 
-    static double VAT(double vat, double cost) {
-        return cost * (vat / 100);
+//task 5
+class PurchasedItem {
+    private double costPrice;
+    private double vatRate;
+    private int quantity;
+
+    public PurchasedItem(double costPrice, double vatRate, int quantity){
+        this.quantity = quantity;
+        this.vatRate=vatRate;
+        this.costPrice=costPrice;
     }
+    protected double getTotalPrice(){
+        double vatValue = costPrice*(vatRate/100);
+        System.out.printf("Price per item %.2f %n",costPrice+vatValue);
+        return (costPrice+vatValue)*quantity;
+    }
+
 }
