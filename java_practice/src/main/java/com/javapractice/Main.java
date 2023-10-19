@@ -1,56 +1,47 @@
 package com.javapractice;
-import java.util.NoSuchElementException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        double cost;
-        double vat;
-        Scanner sc= new Scanner(System.in) ;
+        Scanner sc = new Scanner(System.in);
+        Scanner scString= new Scanner(System.in);
+        boolean continueCalculations = true;
+        double totalCost=0;
 
-        try {
-            System.out.printf("Enter a cost:");
-            cost=sc.nextDouble();
-            System.out.println(cost);
+        while (continueCalculations) {
+            double cost;
+            double vat;
+            String input;
 
-            System.out.printf("Enter VAT:");
-            vat=sc.nextDouble();
-            System.out.println(vat);
+            try {
+                System.out.print("Enter a cost: ");
+                cost = sc.nextDouble();
+                System.out.print("Enter VAT rate (%): ");
+                vat = sc.nextDouble();
 
-            double finalVAT=VAT(vat,cost);
-            double finalPrice = finalVAT+cost;
+                double finalVAT = VAT(vat, cost);
+                double finalPrice = finalVAT + cost;
 
-            System.out.printf("Total price:");
-            System.out.println(finalPrice);
+                totalCost+=finalPrice;
 
-            while (true) {
-                System.out.printf("Enter a cost:");
-                cost=sc.nextDouble();
-                System.out.println(cost);
+                System.out.printf("This price is: £%.2f%n", finalPrice);
+                System.out.printf("the total cost is: £%.2f%n",totalCost);
 
-                System.out.printf("Enter VAT:");
-                vat=sc.nextDouble();
-                System.out.println(vat);
+                System.out.print("Type QUIT to stop or press ENTER to continue: ");
+                input = scString.nextLine();
 
-                finalVAT=VAT(vat,cost);
-                finalPrice = finalVAT+cost;
-
-                System.out.printf("Total price:");
-                System.out.println(finalPrice);
+                if (input.equalsIgnoreCase("QUIT")) {
+                    continueCalculations = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Incorrect value. Please enter valid numbers.");
+                sc.nextLine(); // Consume the invalid input
             }
-
         }
-        catch(NoSuchElementException e) {
-            System.out.println("incorrect value");
-        }
-
-
-    }
-    static double VAT(double vat, double cost){
-       double final_vat = cost*(vat/100);
-
-       return final_vat;
     }
 
-
+    static double VAT(double vat, double cost) {
+        return cost * (vat / 100);
+    }
 }
